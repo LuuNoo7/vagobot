@@ -1,0 +1,246 @@
+{
+  "nodes": [
+    {
+      "type": "command",
+      "name": "warn",
+      "guid": "08a60188-1bc7-4414-b2fd-02300d88aab7",
+      "outputs": [
+        {
+          "label": "responses",
+          "connections": [
+            "f8837660-e1e3-4b9a-8489-bc36e215591a"
+          ]
+        }
+      ],
+      "x": 23,
+      "y": 85
+    },
+    {
+      "type": "response",
+      "name": "getUserToWarn",
+      "guid": "f8837660-e1e3-4b9a-8489-bc36e215591a",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "808df924-7c01-4b18-ab62-a2a32d3c69a1"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "08a60188-1bc7-4414-b2fd-02300d88aab7"
+        }
+      ],
+      "x": 191,
+      "y": 72,
+      "rtype": "Variable",
+      "rsubtype": "Get Mentioned User",
+      "formdata": [
+        "UserToWarn",
+        "User",
+        "temp"
+      ],
+      "formnames": [
+        "varname",
+        "vartype",
+        "saveVarType"
+      ]
+    },
+    {
+      "type": "response",
+      "name": "getReasonToWarn",
+      "guid": "808df924-7c01-4b18-ab62-a2a32d3c69a1",
+      "reactionFields": [],
+      "embedfields": [],
+      "saveToVariable": "reasonToWarn",
+      "saveToVariableType": "temp",
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "42193cc9-bf1c-4f4e-ab1c-fc9cc666c107"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "f8837660-e1e3-4b9a-8489-bc36e215591a"
+        }
+      ],
+      "x": 353,
+      "y": 73,
+      "rtype": "Variable",
+      "rsubtype": "Store Value in Variable",
+      "formdata": [
+        "reasonToWarn",
+        "Number",
+        "temp",
+        "0"
+      ],
+      "formnames": [
+        "varname",
+        "vartype",
+        "saveVarType",
+        "param"
+      ]
+    },
+    {
+      "type": "response",
+      "name": "warnLogs",
+      "guid": "42193cc9-bf1c-4f4e-ab1c-fc9cc666c107",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "2df3da87-5cd5-4b57-a38d-9cd855f91901"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "808df924-7c01-4b18-ab62-a2a32d3c69a1"
+        }
+      ],
+      "x": 519,
+      "y": 75,
+      "rtype": "User Data",
+      "rsubtype": "Edit User Data",
+      "formdata": [
+        "${tempVars.UserToWarn.id}",
+        "warns",
+        "+",
+        "1"
+      ],
+      "formnames": [
+        "user",
+        "field",
+        "oper",
+        "value"
+      ]
+    },
+    {
+      "type": "response",
+      "name": "LogChannel",
+      "guid": "2df3da87-5cd5-4b57-a38d-9cd855f91901",
+      "reactionFields": [],
+      "embedfields": [],
+      "saveToVariable": "",
+      "saveToVariableType": "temp",
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "616f786a-a9a3-4377-a009-6381ab5aa868"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "42193cc9-bf1c-4f4e-ab1c-fc9cc666c107"
+        }
+      ],
+      "x": 684,
+      "y": 72,
+      "rtype": "Message",
+      "rsubtype": "Send Embed",
+      "formdata": [
+        "logs",
+        "00FF08",
+        "⛔️ User warned!",
+        "",
+        "",
+        "",
+        "",
+        "User: <@${tempVars.UserToWarn.id}>\nReason: ${tempVars.reasonToWarn}\nBy Moderator: <@${dbsVars.CommandAuthor.id}>",
+        "https://cdn.discordapp.com/attachments/896743557027753994/976820714265002014/L_2.png",
+        "",
+        "",
+        "BOOL_TRUE@@",
+        "",
+        "temp"
+      ],
+      "formnames": [
+        "channelname",
+        "color",
+        "title",
+        "url",
+        "authorname",
+        "authorimageurl",
+        "authorlink",
+        "description",
+        "thumbnail",
+        "image",
+        "footer",
+        "timestamp",
+        "saveToVariable",
+        "saveToVariableType"
+      ]
+    },
+    {
+      "type": "response",
+      "name": "InfoAtUser",
+      "guid": "616f786a-a9a3-4377-a009-6381ab5aa868",
+      "reactionFields": [],
+      "embedfields": [],
+      "saveToVariable": "",
+      "saveToVariableType": "temp",
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": []
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "2df3da87-5cd5-4b57-a38d-9cd855f91901"
+        }
+      ],
+      "x": 844,
+      "y": 73,
+      "rtype": "Message",
+      "rsubtype": "Send Embed",
+      "formdata": [
+        "${dbsVars.CommandChannel.id}",
+        "00FF1A",
+        "🚫 User warned!",
+        "",
+        "",
+        "",
+        "",
+        "Warned the User <@${tempVars.UserToWarn.id}> for the reason: ${tempVars.reasonToWarn}",
+        "https://cdn.discordapp.com/attachments/896743557027753994/976820714265002014/L_2.png",
+        "",
+        "",
+        "false",
+        "",
+        "temp"
+      ],
+      "formnames": [
+        "channelname",
+        "color",
+        "title",
+        "url",
+        "authorname",
+        "authorimageurl",
+        "authorlink",
+        "description",
+        "thumbnail",
+        "image",
+        "footer",
+        "timestamp",
+        "saveToVariable",
+        "saveToVariableType"
+      ]
+    }
+  ]
+}

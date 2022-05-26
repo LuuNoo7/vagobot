@@ -1,0 +1,73 @@
+{
+  "command": [
+    {
+      "name": "warn",
+      "actions": [
+        {
+          "name": "getUserToWarn",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "varname": "UserToWarn",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "getReasonToWarn",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "varname": "reasonToWarn",
+          "vartype": "Number",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "warnLogs",
+          "category": "User Data",
+          "type": "Edit User Data",
+          "user": "${tempVars.UserToWarn.id}",
+          "field": "warns",
+          "oper": "+",
+          "value": "1"
+        },
+        {
+          "name": "LogChannel",
+          "category": "Message",
+          "type": "Send Embed",
+          "channelname": "logs",
+          "color": "00FF08",
+          "title": "⛔️ User warned!",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "User: <@${tempVars.UserToWarn.id}>\nReason: ${tempVars.reasonToWarn}\nBy Moderator: <@${dbsVars.CommandAuthor.id}>",
+          "thumbnail": "https://cdn.discordapp.com/attachments/896743557027753994/976820714265002014/L_2.png",
+          "image": "",
+          "footer": "",
+          "timestamp": "BOOL_TRUE@@",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "InfoAtUser",
+          "category": "Message",
+          "type": "Send Embed",
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "00FF1A",
+          "title": "🚫 User warned!",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "Warned the User <@${tempVars.UserToWarn.id}> for the reason: ${tempVars.reasonToWarn}",
+          "thumbnail": "https://cdn.discordapp.com/attachments/896743557027753994/976820714265002014/L_2.png",
+          "image": "",
+          "footer": "",
+          "timestamp": "false",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    }
+  ]
+}
